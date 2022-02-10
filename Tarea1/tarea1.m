@@ -7,12 +7,23 @@
 % En ASCII a-z|97-122, á-ú|(225 ,233,237,243,250), Á-Ú|(193,201,205,211,218),
 % A-Z|65-90
 % ' '|32,'.'|46, ','|44, '"'|34, '¿?'|63, '¡!'|33
-
 clc
 clear all
 close all
 
 str = extractFileText('./Don Miguel Ruiz - Los Cuatro Acuerdos_ Una Guia Practica para la Libertad Personal (1999).docx');
+
+% get de reduced alphabet
+a_z = 97:122;
+a_u = [225 ,233,237,243,250];
+A_U = [193 201 205 211 218];
+A_Z = 65:90;
+punctuation = [32,46,44,34,63,33,161,191];
+accepted=sort([a_z a_u A_U A_Z punctuation]);
+alphabet = 32:255;
+reduced_alphabet=setdiff(alphabet,accepted);
+
+
 file_char = char(str);
 
 ascii_file = double(file_char);
@@ -21,12 +32,8 @@ prob = h.Values.*10e-6; %probabilidad
 chars_ascii = h.BinEdges; %caracteres en formato ascii
 chars_ascii=chars_ascii(1:end-1);
 [chars_ascii',prob'];
-% sum(prob)
+%sum(prob)
 
-a_z = [97:122];
-a_u = [225 ,233,237,243,250];
-A_U = [193 201 205 211 218];
-A_Z = [65:90];
-alfabeto=sort([a_z a_u A_U A_Z]);
+
 
 
