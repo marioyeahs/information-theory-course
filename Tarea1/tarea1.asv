@@ -4,14 +4,8 @@
 % probabilidades de cada símbolo Al obtener las probabilidades podemos
 % sacar la entropía de la fuente. El alfabeto reducido contiene los sig
 % caracteres {‘a’, …, ’z’, ‘á’, …, ’ú’, ’ ‘, ‘.’, ‘,’, ‘´’, ‘?’, ‘!’}
-% En ASCII a-z|97-122, á-ú|(225 ,233,237,243,250), Á-Ú|(193,201,205,211,218),
-% A-Z|65-90
+%En ASCII a-z|97-122, á-ú|(225 ,130,161,162,163), Á-Ú|(181,144,214,224,233),
 % ' '|32,'.'|46, ','|44, '"'|34, '¿?'|63, '¡!'|33
-% a_z=[97:122];
-% a_u=[225 ,233,237,243,250];
-% A_U = [193 201 205 211 218];
-% A_Z = [65:90];
-
 clc
 clear all
 close all
@@ -20,11 +14,15 @@ str = extractFileText('/Users/jenniffercervantes/Documents/MATLAB/information-th
 file_char = char(str);
 
 ascii_file = double(file_char);
-h = histogram(ascii_file,'BinWidth',1);
+h = histogram(ascii_file,'BinWidth',1)
 prob = h.Values.*10e-6; %probabilidad
 chars_ascii = h.BinEdges; %caracteres en formato ascii
 chars_ascii=chars_ascii(1:end-1);
-[chars_ascii',prob'];
-% sum(prob)
+[chars_ascii',prob']
+sum(prob)
 
+% 
+% for k=33:47
+% char(k);
+% end
 
