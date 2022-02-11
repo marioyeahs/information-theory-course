@@ -19,9 +19,8 @@ a_u = [225 ,233,237,243,250];
 A_U = [193 201 205 211 218];
 A_Z = 65:90;
 punctuation = [32,46,44,34,63,33,161,191];
-accepted=sort([a_z a_u A_U A_Z punctuation]);
+reduced_alphabet=sort([a_z a_u A_U A_Z punctuation]);
 alphabet = 32:255;
-reduced_alphabet=intersect(alphabet,accepted);
 
 file_char = char(str);
 ascii_file = double(file_char);
@@ -30,7 +29,7 @@ reduced_text=ismember(ascii_file,reduced_alphabet);
 reduced_text=reduced_text.*ascii_file;
 vector_reduced_text=nonzeros(reduced_text)';
 
-N = length(ascii_file);
+% N = length(ascii_file);
 
 % for i=1:N
 %     if ismember(ascii_file(i),reduced_alphabet)
