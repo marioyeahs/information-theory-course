@@ -25,7 +25,19 @@ for i=1:N
     else
         y_alph(i) = 1;
     end
-    
+    if x_alph(i) == y_alph(i)
+        if x_alph(i) == 0
+            z2z = z2z + 1;
+        else 
+            one2one = one2one +1;
+        end
+    else
+       if isequal(x_alph(i),0) && isequal(y_alph(i),1)
+           z2one = z2one + 1;
+       else
+           one2z = one2z + 1;
+       end
+    end       
 end
 
 detector=[x_alph;y;y_alph]'
