@@ -8,8 +8,8 @@ SNR = 0:5;
 x_pow = 1;
 n_pow = x_pow./(10.^(SNR/10));
 err = zeros(size(SNR));
-N = 10000;
-N_s = 1000;
+N = 1e6;
+N_s = 1e4;
 for i = 1:N
     for j = 1:length(SNR)
         x = randsrc(1,N_s, [-1 1; P_x]);
@@ -19,24 +19,16 @@ for i = 1:N
         xe = (y>=0)*2 - 1;
         err(j) = err(j) + sum(x~=xe);
     end
-
+    P_e =  err/(i*N_s);
+    semilogy(SNR,P_e)
+    title(i*N_s)
+    drawnow
 end
-
-P_e =  err/(i*N_s);
-semilogy(SNR,P_e)
-% title(i*N_s)
-% drawnow
 
 errors = find((x~=xe)==1);
-one2z = 0;
-z2one = 0;
+
 for i1 = 1:length(errors)
     if x(errors)==1
-        one2z = one2z + 1;
-    else
-        z2one = z2one + 1;
-    end
-end
         
 
 % n_pow = x_pow/(10^(SNR/10));
