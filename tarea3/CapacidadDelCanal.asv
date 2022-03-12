@@ -8,8 +8,13 @@ SNR = 0:5;
 x_pow = 1;
 n_pow = x_pow./(10.^(SNR/10));
 err = zeros(size(SNR));
-N = 1e6;
-N_s = 1e4;
+% o2z = 0;
+% z2o = 0;
+z2o = zeros(size(SNR));
+o2z = zeros(size(SNR));
+
+N = 100;
+N_s = 1000;
 for i = 1:N
     for j = 1:length(SNR)
         x = randsrc(1,N_s, [-1 1; P_x]);
@@ -18,6 +23,18 @@ for i = 1:N
         y = sqrt(n_pow(j))*randn(1,N_s) + x;
         xe = (y>=0)*2 - 1;
         err(j) = err(j) + sum(x~=xe);
+        indx_err = find((x~=xe)==1);
+        for kn = indx_err
+        
+            end
+    end
+    indx_err = find((x~=xe)==1);
+    for k = indx_err
+        if x(k)==1 & xe(k)==-1
+            o2z = o2z +1;
+        elseif x(k)==-1 & xe(k)==1
+            z2o = z2o +1;
+        end  
     end
     P_e =  err/(i*N_s);
     semilogy(SNR,P_e)
@@ -25,11 +42,27 @@ for i = 1:N
     drawnow
 end
 
-errors = find((x~=xe)==1);
+% indx_err = find((x~=xe)==1);
+% for i=indx_err
+%     if x(i)==1 && xe(i)==-1
+%         o2z = o2z + 1;
+%     else
+%         z2o = z2o + 1;
+%     end
+% end
 
-for i1 = 1:length(errors)
-    if x(errors)==1
-        
+% indices donde dada una SNR en hay errores
+% z2o = find((x~=xe)==1);
+% one2z = 0;
+% z2one = 0;
+% for i1 = 1:length(errors)
+%     if x(errors)==1
+%         one2z = one2z + 1;
+%     else
+%         z2one = z2one + 1;
+%     end
+% end
+%         
 
 % n_pow = x_pow/(10^(SNR/10));
 % 

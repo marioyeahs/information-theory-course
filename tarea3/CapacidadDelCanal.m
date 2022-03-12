@@ -8,7 +8,10 @@ SNR = 0:5;
 x_pow = 1;
 n_pow = x_pow./(10.^(SNR/10));
 err = zeros(size(SNR));
-N = 10000;
+z2o = zeros(size(SNR));
+o2z = zeros(size(SNR));
+
+N = 100;
 N_s = 1000;
 for i = 1:N
     for j = 1:length(SNR)
@@ -18,37 +21,25 @@ for i = 1:N
         y = sqrt(n_pow(j))*randn(1,N_s) + x;
         xe = (y>=0)*2 - 1;
         err(j) = err(j) + sum(x~=xe);
+        indx_err = find((x~=xe)==1);
+        for k = indx_err
+            if x(k)==1 & xe(k)==-1
+                o2z(j) = o2z(j) +1;
+            elseif x(k)==-1 & xe(k)==1
+                z2o(j) = z2o(j) +1;
+            end  
+        end
     end
-
+    P_e =  err/(i*N_s);
+    semilogy(SNR,P_e)
+    title(i*N_s)
+    drawnow
 end
 
-P_e =  err/(i*N_s);
-semilogy(SNR,P_e)
-% title(i*N_s)
-% drawnow
-
-errors = find((x~=xe)==1);
-one2z = 0;
-z2one = 0;
-for i1 = 1:length(errors)
-    if x(errors)==1
-        one2z = one2z + 1;
-    else
-        z2one = z2one + 1;
-    end
-end
-        
-
-% n_pow = x_pow/(10^(SNR/10));
 % 
 % x_alph = randerr(1,N,[0 (N/2);0 1]);
 % y = zeros(1,N);
 % y_alph = zeros(1,N);
-% 
-% z2z = 0;
-% one2one = 0;
-% z2one = 0;
-% one2z = 0;
 % 
 % for i=1:N
 %     y(i) = x_alph(i) + randn(1,1) * sqrt(n_pow);
@@ -72,10 +63,7 @@ end
 %     end       
 % end
 % 
-% detector=[x_alph;y;y_alph]'
-% 
-% entrada=detector(1:10);
-% salida=detector(21:30);
+
 % 
 % z2z_prob = z2z/(N/2);
 % one2one_prob = one2one/(N/2);
