@@ -52,9 +52,9 @@ for j = CB
 end
 
 
-
+proba=[];
 for p=pair
-    disp(count(str,p))
+    proba = [proba, count(text,p)];
 end
 
     
